@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
 
 import 'bloc/home_bloc.dart';
@@ -36,6 +37,7 @@ class HomeScreen extends StatelessWidget {
             key: _scaffoldKey,
             appBar: searchAppBar(context),
             body: body(context, state),
+            floatingActionButton: fab(context),
           );
         }),
       ),
@@ -86,13 +88,37 @@ class HomeScreen extends StatelessWidget {
   Widget body(BuildContext context, HomeState state) {
     if (state is HomeInitialState) {
       return ListView.builder(
-        itemCount: state.reposList.length,
-        itemBuilder: (context, index){
-          return Text('Temp text');
-        }
-        );
+          itemCount: state.reposList.length,
+          itemBuilder: (context, index) {
+            return repoListItem(context, state.reposList[index]);
+          });
     } else {
       return Text('BLoC state error');
     }
+  }
+
+  Widget repoListItem(BuildContext context, ReposItem repoData) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            repoData.name,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 10),
+          Text(repoData.description),
+          Divider()
+        ],
+      ),
+    );
+  }
+
+  Widget fab(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      child: Icon(Icons.add),
+    );
   }
 }
