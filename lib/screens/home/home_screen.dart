@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_search/widgets/layers/load_layer.dart';
 
 import 'bloc/home_bloc.dart';
 
@@ -23,6 +24,11 @@ class HomeScreen extends StatelessWidget {
                 backgroundColor: Colors.red,
               ),
             );
+          }
+          if (state is HomeLoadingState) {
+            state.isLoading
+                ? showLoadingLayer(context)
+                : Navigator.pop(context);
           }
         },
         child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {

@@ -37,7 +37,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } else if (!nameRegExp.hasMatch(searchEditingController.text)) {
       yield HomeFailureState(error: 'Please use the Latin Alphabet');
     } else {
-      repository.reposByName(searchEditingController.text);
+      yield HomeLoadingState(isLoading: true);
+      await repository.reposByName(searchEditingController.text);
+      yield HomeLoadingState(isLoading: false);
     }
     yield HomeInitialEvent(textController: searchEditingController);
   }

@@ -16,6 +16,18 @@ class HomeInitialEvent extends HomeState {
   List<Object> get props => [textController];
 }
 
+class HomeLoadingState extends HomeState {
+  final bool isLoading;
+
+  const HomeLoadingState({@required this.isLoading});
+
+  @override
+  List<Object> get props => [isLoading];
+
+  @override
+  String toString() => 'HomeLoadingState { isLoading: $isLoading }';
+}
+
 class HomeFailureState extends HomeState {
   final String error;
 
