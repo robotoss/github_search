@@ -11,28 +11,28 @@ String searchReposToJson(SearchRepos data) => json.encode(data.toJson());
 class SearchRepos {
     int totalCount;
     bool incompleteResults;
-    List<Item> items;
+    List<ReposItem> repoItems;
 
     SearchRepos({
         this.totalCount,
         this.incompleteResults,
-        this.items,
+        this.repoItems,
     });
 
     factory SearchRepos.fromJson(Map<String, dynamic> json) => SearchRepos(
         totalCount: json["total_count"] == null ? null : json["total_count"],
         incompleteResults: json["incomplete_results"] == null ? null : json["incomplete_results"],
-        items: json["items"] == null ? null : List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+        repoItems: json["items"] == null ? null : List<ReposItem>.from(json["items"].map((x) => ReposItem.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "total_count": totalCount == null ? null : totalCount,
         "incomplete_results": incompleteResults == null ? null : incompleteResults,
-        "items": items == null ? null : List<dynamic>.from(items.map((x) => x.toJson())),
+        "items": repoItems == null ? null : List<dynamic>.from(repoItems.map((x) => x.toJson())),
     };
 }
 
-class Item {
+class ReposItem {
     int id;
     String nodeId;
     String name;
@@ -57,7 +57,7 @@ class Item {
     String defaultBranch;
     double score;
 
-    Item({
+    ReposItem({
         this.id,
         this.nodeId,
         this.name,
@@ -83,7 +83,7 @@ class Item {
         this.score,
     });
 
-    factory Item.fromJson(Map<String, dynamic> json) => Item(
+    factory ReposItem.fromJson(Map<String, dynamic> json) => ReposItem(
         id: json["id"] == null ? null : json["id"],
         nodeId: json["node_id"] == null ? null : json["node_id"],
         name: json["name"] == null ? null : json["name"],
