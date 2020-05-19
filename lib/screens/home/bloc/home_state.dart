@@ -7,13 +7,14 @@ abstract class HomeState extends Equatable {
   List<Object> get props => [];
 }
 
-class HomeInitialEvent extends HomeState {
+class HomeInitialState extends HomeState {
   final TextEditingController textController;
+  final List<ReposItem> reposList;
 
-  HomeInitialEvent({@required this.textController});
+  HomeInitialState({@required this.textController, @required this.reposList});
 
   @override
-  List<Object> get props => [textController];
+  List<Object> get props => [textController, reposList];
 }
 
 class HomeLoadingState extends HomeState {

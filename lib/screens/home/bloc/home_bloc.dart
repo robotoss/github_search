@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/data/repository/repository.dart';
 import 'package:meta/meta.dart';
 
@@ -11,14 +13,16 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
-  HomeState get initialState =>
-      HomeInitialEvent(textController: searchEditingController);
+  HomeState get initialState => HomeInitialState(
+      textController: searchEditingController, reposList: reposList);
 
   TextEditingController searchEditingController = TextEditingController();
 
   static final RegExp nameRegExp = RegExp('[a-zA-Z]');
 
   Repository repository = Repository();
+
+  List<ReposItem> reposList = List();
 
   @override
   Stream<HomeState> mapEventToState(
@@ -38,9 +42,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeFailureState(error: 'Please use the Latin Alphabet');
     } else {
       yield HomeLoadingState(isLoading: true);
-      await repository.reposByName(searchEditingController.text);
-      yield HomeLoadingState(isLoading: false);
+      yield HomeInitialState(
+          textController: searchEditingController, reposList: reposList);
+
+      try {
+        var serverData =
+            await repository.reposByName(searchEditingController.text);
+        reposList = serverData.repoItems;
+        yield HomeLoadingState(isLoading: false);
+      } catch (error) {
+        yield HomeLoadingState(isLoading: false);
+        if (error is DioError) {
+          yield HomeFailureState(error: error.message);
+        } else {
+          print('HOME_BLOC_ERROR: $error');
+        }
+      }
     }
-    yield HomeInitialEvent(textController: searchEditingController);
+    yield HomeInitialState(
+        textController: searchEditingController, reposList: reposList);
   }
 }

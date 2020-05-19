@@ -35,13 +35,16 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(
             key: _scaffoldKey,
             appBar: searchAppBar(context),
+            body: body(context, state),
           );
         }),
       ),
     );
   }
 
-  Widget searchAppBar(BuildContext context) {
+  Widget searchAppBar(
+    BuildContext context,
+  ) {
     return AppBar(
       title: Container(
         height: 40,
@@ -78,5 +81,18 @@ class HomeScreen extends StatelessWidget {
                 .add(SearchButtonPressedEvent()))
       ],
     );
+  }
+
+  Widget body(BuildContext context, HomeState state) {
+    if (state is HomeInitialState) {
+      return ListView.builder(
+        itemCount: state.reposList.length,
+        itemBuilder: (context, index){
+          return Text('Temp text');
+        }
+        );
+    } else {
+      return Text('BLoC state error');
+    }
   }
 }
