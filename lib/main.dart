@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'data/network/performens/dio/dio_network_service.dart';
+import 'data/network/services/services_api.dart';
+
 void main() {
   runApp(MyApp());
+
+  ServicesApi().authorizationEnterSms('tetris');
 }
 
 class MyApp extends StatelessWidget {
