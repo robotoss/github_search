@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:github_search/data/repository/repository.dart';
 import 'package:meta/meta.dart';
 
 part 'home_event.dart';
@@ -17,7 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   static final RegExp nameRegExp = RegExp('[a-zA-Z]');
 
-  
+  Repository repository = Repository();
 
   @override
   Stream<HomeState> mapEventToState(
@@ -35,6 +36,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeFailureState(error: 'Min characters is 3');
     } else if (!nameRegExp.hasMatch(searchEditingController.text)) {
       yield HomeFailureState(error: 'Please use the Latin Alphabet');
+    } else {
+      repository.reposByName(searchEditingController.text);
     }
     yield HomeInitialEvent(textController: searchEditingController);
   }
