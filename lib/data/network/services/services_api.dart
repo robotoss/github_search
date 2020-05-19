@@ -7,7 +7,8 @@ class ServicesApi {
 
   String baseUrl = 'https://api.github.com';
 
-  Future<SearchRepos> authorizationEnterSms(String keyword) async {
+  /// Get repo by name
+  Future<SearchRepos> reposByName(String keyword) async {
     Response<String> authResponse = await networkService.dio
         .get("$baseUrl/search/repositories", queryParameters: {"q": keyword});
     return searchReposFromJson(authResponse.toString());
