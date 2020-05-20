@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_search/data/models/search_repos.dart';
+import 'package:github_search/screens/repo_info/repo_info_screen.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
 
 import 'bloc/home_bloc.dart';
@@ -33,7 +34,7 @@ class HomeScreen extends StatelessWidget {
           }
         },
         child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-          return  Container(
+          return Container(
             color: Colors.white,
             child: SafeArea(
               top: false,
@@ -106,17 +107,24 @@ class HomeScreen extends StatelessWidget {
   Widget repoListItem(BuildContext context, ReposItem repoData) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            repoData.name,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(height: 10),
-          Text(repoData.description),
-          Divider()
-        ],
+      child: InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) =>
+                RepoInfoScreen(repoData: repoData))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              repoData.name,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 10),
+            Text(repoData.description),
+            Divider()
+          ],
+        ),
       ),
     );
   }
