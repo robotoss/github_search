@@ -9,8 +9,7 @@ ThemeData _buildDefaultTheme() {
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
-        brightness: Brightness.dark,
-        iconTheme: IconThemeData(color: Colors.black)),
+        brightness: Brightness.dark),
   );
 }
 
