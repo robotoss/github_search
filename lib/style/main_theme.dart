@@ -7,6 +7,7 @@ ThemeData _buildDefaultTheme() {
   return ThemeData(
     fontFamily: 'SF Pro Display',
     brightness: Brightness.light,
+    scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
         brightness: Brightness.dark,
         iconTheme: IconThemeData(color: Colors.black)),

@@ -33,11 +33,17 @@ class HomeScreen extends StatelessWidget {
           }
         },
         child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-          return Scaffold(
-            key: _scaffoldKey,
-            appBar: searchAppBar(context),
-            body: body(context, state),
-            floatingActionButton: fab(context),
+          return  Container(
+            color: Colors.white,
+            child: SafeArea(
+              top: false,
+              child: Scaffold(
+                key: _scaffoldKey,
+                appBar: searchAppBar(context),
+                body: body(context, state),
+                floatingActionButton: fab(context),
+              ),
+            ),
           );
         }),
       ),
