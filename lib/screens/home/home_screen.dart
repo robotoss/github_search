@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_search/data/models/search_repos.dart';
+import 'package:github_search/screens/repo_edit/repo_edit_screen.dart';
 import 'package:github_search/screens/repo_info/repo_info_screen.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
 
@@ -131,7 +132,9 @@ class HomeScreen extends StatelessWidget {
 
   Widget fab(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) =>
+                RepoEditScreen())),
       child: Icon(Icons.add),
     );
   }
