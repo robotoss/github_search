@@ -3,6 +3,6 @@ part of 'app_start_bloc.dart';
 @immutable
 abstract class AppStartState {}
 
-class AppStartInitial extends AppStartState {}
+class AppStartInitialState extends AppStartState {}
 
-class AppStartLoading extends AppStartState {}
+class AppStartLoadingState extends AppStartState {}

@@ -7,7 +7,7 @@ part of 'database_repo_search_dao.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class Owner extends DataClass implements Insertable<Owner> {
+class User extends DataClass implements Insertable<User> {
   final int id;
   final String login;
   final String nodeId;
@@ -16,7 +16,7 @@ class Owner extends DataClass implements Insertable<Owner> {
   final String url;
   final String receivedEventsUrl;
   final String type;
-  Owner(
+  User(
       {@required this.id,
       @required this.login,
       @required this.nodeId,
@@ -25,12 +25,12 @@ class Owner extends DataClass implements Insertable<Owner> {
       @required this.url,
       @required this.receivedEventsUrl,
       @required this.type});
-  factory Owner.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory User.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    return Owner(
+    return User(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       login:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}login']),
@@ -76,8 +76,8 @@ class Owner extends DataClass implements Insertable<Owner> {
     return map;
   }
 
-  OwnersCompanion toCompanion(bool nullToAbsent) {
-    return OwnersCompanion(
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       login:
           login == null && nullToAbsent ? const Value.absent() : Value(login),
@@ -97,10 +97,10 @@ class Owner extends DataClass implements Insertable<Owner> {
     );
   }
 
-  factory Owner.fromJson(Map<String, dynamic> json,
+  factory User.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Owner(
+    return User(
       id: serializer.fromJson<int>(json['id']),
       login: serializer.fromJson<String>(json['login']),
       nodeId: serializer.fromJson<String>(json['nodeId']),
@@ -126,7 +126,7 @@ class Owner extends DataClass implements Insertable<Owner> {
     };
   }
 
-  Owner copyWith(
+  User copyWith(
           {int id,
           String login,
           String nodeId,
@@ -135,7 +135,7 @@ class Owner extends DataClass implements Insertable<Owner> {
           String url,
           String receivedEventsUrl,
           String type}) =>
-      Owner(
+      User(
         id: id ?? this.id,
         login: login ?? this.login,
         nodeId: nodeId ?? this.nodeId,
@@ -147,7 +147,7 @@ class Owner extends DataClass implements Insertable<Owner> {
       );
   @override
   String toString() {
-    return (StringBuffer('Owner(')
+    return (StringBuffer('User(')
           ..write('id: $id, ')
           ..write('login: $login, ')
           ..write('nodeId: $nodeId, ')
@@ -178,7 +178,7 @@ class Owner extends DataClass implements Insertable<Owner> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is Owner &&
+      (other is User &&
           other.id == this.id &&
           other.login == this.login &&
           other.nodeId == this.nodeId &&
@@ -189,7 +189,7 @@ class Owner extends DataClass implements Insertable<Owner> {
           other.type == this.type);
 }
 
-class OwnersCompanion extends UpdateCompanion<Owner> {
+class UsersCompanion extends UpdateCompanion<User> {
   final Value<int> id;
   final Value<String> login;
   final Value<String> nodeId;
@@ -198,7 +198,7 @@ class OwnersCompanion extends UpdateCompanion<Owner> {
   final Value<String> url;
   final Value<String> receivedEventsUrl;
   final Value<String> type;
-  const OwnersCompanion({
+  const UsersCompanion({
     this.id = const Value.absent(),
     this.login = const Value.absent(),
     this.nodeId = const Value.absent(),
@@ -208,7 +208,7 @@ class OwnersCompanion extends UpdateCompanion<Owner> {
     this.receivedEventsUrl = const Value.absent(),
     this.type = const Value.absent(),
   });
-  OwnersCompanion.insert({
+  UsersCompanion.insert({
     this.id = const Value.absent(),
     @required String login,
     @required String nodeId,
@@ -224,7 +224,7 @@ class OwnersCompanion extends UpdateCompanion<Owner> {
         url = Value(url),
         receivedEventsUrl = Value(receivedEventsUrl),
         type = Value(type);
-  static Insertable<Owner> custom({
+  static Insertable<User> custom({
     Expression<int> id,
     Expression<String> login,
     Expression<String> nodeId,
@@ -246,7 +246,7 @@ class OwnersCompanion extends UpdateCompanion<Owner> {
     });
   }
 
-  OwnersCompanion copyWith(
+  UsersCompanion copyWith(
       {Value<int> id,
       Value<String> login,
       Value<String> nodeId,
@@ -255,7 +255,7 @@ class OwnersCompanion extends UpdateCompanion<Owner> {
       Value<String> url,
       Value<String> receivedEventsUrl,
       Value<String> type}) {
-    return OwnersCompanion(
+    return UsersCompanion(
       id: id ?? this.id,
       login: login ?? this.login,
       nodeId: nodeId ?? this.nodeId,
@@ -298,10 +298,10 @@ class OwnersCompanion extends UpdateCompanion<Owner> {
   }
 }
 
-class $OwnersTable extends Owners with TableInfo<$OwnersTable, Owner> {
+class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   final GeneratedDatabase _db;
   final String _alias;
-  $OwnersTable(this._db, [this._alias]);
+  $UsersTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -401,13 +401,13 @@ class $OwnersTable extends Owners with TableInfo<$OwnersTable, Owner> {
   List<GeneratedColumn> get $columns =>
       [id, login, nodeId, avatarUrl, gravatarId, url, receivedEventsUrl, type];
   @override
-  $OwnersTable get asDslTable => this;
+  $UsersTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'owners';
+  String get $tableName => _alias ?? 'users';
   @override
-  final String actualTableName = 'owners';
+  final String actualTableName = 'users';
   @override
-  VerificationContext validateIntegrity(Insertable<Owner> instance,
+  VerificationContext validateIntegrity(Insertable<User> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -466,20 +466,20 @@ class $OwnersTable extends Owners with TableInfo<$OwnersTable, Owner> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Owner map(Map<String, dynamic> data, {String tablePrefix}) {
+  User map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Owner.fromData(data, _db, prefix: effectivePrefix);
+    return User.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $OwnersTable createAlias(String alias) {
-    return $OwnersTable(_db, alias);
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(_db, alias);
   }
 }
 
 class RepoItem extends DataClass implements Insertable<RepoItem> {
   final int id;
-  final int ownerId;
+  final int userId;
   final String programName;
   final String nodeId;
   final String name;
@@ -504,7 +504,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
   final double score;
   RepoItem(
       {@required this.id,
-      @required this.ownerId,
+      @required this.userId,
       @required this.programName,
       @required this.nodeId,
       @required this.name,
@@ -537,8 +537,8 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     final doubleType = db.typeSystem.forDartType<double>();
     return RepoItem(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      ownerId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}owner_id']),
+      userId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
       programName: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}program_name']),
       nodeId:
@@ -587,8 +587,8 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     if (!nullToAbsent || id != null) {
       map['id'] = Variable<int>(id);
     }
-    if (!nullToAbsent || ownerId != null) {
-      map['owner_id'] = Variable<int>(ownerId);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
     }
     if (!nullToAbsent || programName != null) {
       map['program_name'] = Variable<String>(programName);
@@ -662,9 +662,8 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
   RepoItemsCompanion toCompanion(bool nullToAbsent) {
     return RepoItemsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      ownerId: ownerId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(ownerId),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
       programName: programName == null && nullToAbsent
           ? const Value.absent()
           : Value(programName),
@@ -729,7 +728,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return RepoItem(
       id: serializer.fromJson<int>(json['id']),
-      ownerId: serializer.fromJson<int>(json['ownerId']),
+      userId: serializer.fromJson<int>(json['userId']),
       programName: serializer.fromJson<String>(json['programName']),
       nodeId: serializer.fromJson<String>(json['nodeId']),
       name: serializer.fromJson<String>(json['name']),
@@ -759,7 +758,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'ownerId': serializer.toJson<int>(ownerId),
+      'userId': serializer.toJson<int>(userId),
       'programName': serializer.toJson<String>(programName),
       'nodeId': serializer.toJson<String>(nodeId),
       'name': serializer.toJson<String>(name),
@@ -787,7 +786,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
 
   RepoItem copyWith(
           {int id,
-          int ownerId,
+          int userId,
           String programName,
           String nodeId,
           String name,
@@ -812,7 +811,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
           double score}) =>
       RepoItem(
         id: id ?? this.id,
-        ownerId: ownerId ?? this.ownerId,
+        userId: userId ?? this.userId,
         programName: programName ?? this.programName,
         nodeId: nodeId ?? this.nodeId,
         name: name ?? this.name,
@@ -840,7 +839,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
   String toString() {
     return (StringBuffer('RepoItem(')
           ..write('id: $id, ')
-          ..write('ownerId: $ownerId, ')
+          ..write('userId: $userId, ')
           ..write('programName: $programName, ')
           ..write('nodeId: $nodeId, ')
           ..write('name: $name, ')
@@ -871,7 +870,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
   int get hashCode => $mrjf($mrjc(
       id.hashCode,
       $mrjc(
-          ownerId.hashCode,
+          userId.hashCode,
           $mrjc(
               programName.hashCode,
               $mrjc(
@@ -914,7 +913,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
       identical(this, other) ||
       (other is RepoItem &&
           other.id == this.id &&
-          other.ownerId == this.ownerId &&
+          other.userId == this.userId &&
           other.programName == this.programName &&
           other.nodeId == this.nodeId &&
           other.name == this.name &&
@@ -941,7 +940,7 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
 
 class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   final Value<int> id;
-  final Value<int> ownerId;
+  final Value<int> userId;
   final Value<String> programName;
   final Value<String> nodeId;
   final Value<String> name;
@@ -966,7 +965,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   final Value<double> score;
   const RepoItemsCompanion({
     this.id = const Value.absent(),
-    this.ownerId = const Value.absent(),
+    this.userId = const Value.absent(),
     this.programName = const Value.absent(),
     this.nodeId = const Value.absent(),
     this.name = const Value.absent(),
@@ -992,7 +991,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   });
   RepoItemsCompanion.insert({
     this.id = const Value.absent(),
-    @required int ownerId,
+    @required int userId,
     @required String programName,
     @required String nodeId,
     @required String name,
@@ -1015,7 +1014,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
     @required String masterBranch,
     @required String defaultBranch,
     @required double score,
-  })  : ownerId = Value(ownerId),
+  })  : userId = Value(userId),
         programName = Value(programName),
         nodeId = Value(nodeId),
         name = Value(name),
@@ -1040,7 +1039,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
         score = Value(score);
   static Insertable<RepoItem> custom({
     Expression<int> id,
-    Expression<int> ownerId,
+    Expression<int> userId,
     Expression<String> programName,
     Expression<String> nodeId,
     Expression<String> name,
@@ -1066,7 +1065,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (ownerId != null) 'owner_id': ownerId,
+      if (userId != null) 'user_id': userId,
       if (programName != null) 'program_name': programName,
       if (nodeId != null) 'node_id': nodeId,
       if (name != null) 'name': name,
@@ -1094,7 +1093,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
 
   RepoItemsCompanion copyWith(
       {Value<int> id,
-      Value<int> ownerId,
+      Value<int> userId,
       Value<String> programName,
       Value<String> nodeId,
       Value<String> name,
@@ -1119,7 +1118,7 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
       Value<double> score}) {
     return RepoItemsCompanion(
       id: id ?? this.id,
-      ownerId: ownerId ?? this.ownerId,
+      userId: userId ?? this.userId,
       programName: programName ?? this.programName,
       nodeId: nodeId ?? this.nodeId,
       name: name ?? this.name,
@@ -1151,8 +1150,8 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (ownerId.present) {
-      map['owner_id'] = Variable<int>(ownerId.value);
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
     }
     if (programName.present) {
       map['program_name'] = Variable<String>(programName.value);
@@ -1238,13 +1237,13 @@ class $RepoItemsTable extends RepoItems
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
-  final VerificationMeta _ownerIdMeta = const VerificationMeta('ownerId');
-  GeneratedIntColumn _ownerId;
+  final VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  GeneratedIntColumn _userId;
   @override
-  GeneratedIntColumn get ownerId => _ownerId ??= _constructOwnerId();
-  GeneratedIntColumn _constructOwnerId() {
+  GeneratedIntColumn get userId => _userId ??= _constructUserId();
+  GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn(
-      'owner_id',
+      'user_id',
       $tableName,
       false,
     );
@@ -1531,7 +1530,7 @@ class $RepoItemsTable extends RepoItems
   @override
   List<GeneratedColumn> get $columns => [
         id,
-        ownerId,
+        userId,
         programName,
         nodeId,
         name,
@@ -1569,11 +1568,11 @@ class $RepoItemsTable extends RepoItems
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (data.containsKey('owner_id')) {
-      context.handle(_ownerIdMeta,
-          ownerId.isAcceptableOrUnknown(data['owner_id'], _ownerIdMeta));
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id'], _userIdMeta));
     } else if (isInserting) {
-      context.missing(_ownerIdMeta);
+      context.missing(_userIdMeta);
     }
     if (data.containsKey('program_name')) {
       context.handle(
@@ -1743,8 +1742,8 @@ class $RepoItemsTable extends RepoItems
 abstract class _$RepoSearchDatabase extends GeneratedDatabase {
   _$RepoSearchDatabase(QueryExecutor e)
       : super(SqlTypeSystem.defaultInstance, e);
-  $OwnersTable _owners;
-  $OwnersTable get owners => _owners ??= $OwnersTable(this);
+  $UsersTable _users;
+  $UsersTable get users => _users ??= $UsersTable(this);
   $RepoItemsTable _repoItems;
   $RepoItemsTable get repoItems => _repoItems ??= $RepoItemsTable(this);
   RepoSearchBaseDao _repoSearchBaseDao;
@@ -1753,7 +1752,7 @@ abstract class _$RepoSearchDatabase extends GeneratedDatabase {
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [owners, repoItems];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [users, repoItems];
 }
 
 // **************************************************************************
@@ -1761,6 +1760,6 @@ abstract class _$RepoSearchDatabase extends GeneratedDatabase {
 // **************************************************************************
 
 mixin _$RepoSearchBaseDaoMixin on DatabaseAccessor<RepoSearchDatabase> {
-  $OwnersTable get owners => attachedDatabase.owners;
+  $UsersTable get users => attachedDatabase.users;
   $RepoItemsTable get repoItems => attachedDatabase.repoItems;
 }

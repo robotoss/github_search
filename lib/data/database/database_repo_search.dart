@@ -1,7 +1,7 @@
 import 'package:moor/moor.dart';
 
 // User data
-class Owners extends Table {
+class Users extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get login => text()();
   TextColumn get nodeId => text()();
@@ -18,7 +18,7 @@ class Owners extends Table {
 // Repo data
 class RepoItems extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get ownerId => integer()();
+  IntColumn get userId => integer()();
   TextColumn get programName => text()();
   TextColumn get nodeId => text()();
   TextColumn get name => text()();

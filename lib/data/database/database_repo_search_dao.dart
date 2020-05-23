@@ -20,7 +20,7 @@ LazyDatabase _openConnection() {
 }
 
 @UseMoor(
-    tables: [Owners, RepoItems],
+    tables: [Users, RepoItems],
     daos: [RepoSearchBaseDao])
 class RepoSearchDatabase extends _$RepoSearchDatabase {
   RepoSearchDatabase() : super(_openConnection());
