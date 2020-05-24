@@ -38,12 +38,18 @@ class RepoEditScreen extends StatelessWidget {
             showCustomAlertDialog(context, state.message);
           }
         },
-        child: Scaffold(
-            key: _scaffoldKey,
-            appBar: AppBar(
-              title: Text('Create a new repository'),
-            ),
-            body: body(context)),
+        child: Container(
+          color: Colors.white,
+          child: SafeArea(
+            top: false,
+            child: Scaffold(
+                key: _scaffoldKey,
+                appBar: AppBar(
+                  title: Text('Create a new repository'),
+                ),
+                body: body(context)),
+          ),
+        ),
       ),
     );
   }

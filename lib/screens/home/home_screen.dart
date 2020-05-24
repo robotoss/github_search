@@ -96,6 +96,12 @@ class HomeScreen extends StatelessWidget {
     if (state is HomeInitialState) {
       return SingleChildScrollView(
         child: Column(children: <Widget>[
+          state.userReposList.isNotEmpty
+              ? Text(
+                  'My repositories',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                )
+              : Container(),
           ListView.builder(
               itemCount: state.userReposList.length,
               shrinkWrap: true,
@@ -103,6 +109,12 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return repoListItem(context, state.userReposList[index]);
               }),
+          state.reposList.isNotEmpty
+              ? Text(
+                  'Server repositories',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                )
+              : Container(),
           ListView.builder(
               itemCount: state.reposList.length,
               shrinkWrap: true,
@@ -130,11 +142,11 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              repoData.name,
+              repoData.name?? '',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 10),
-            Text(repoData.description),
+            Text(repoData.description?? ''),
             Divider()
           ],
         ),
