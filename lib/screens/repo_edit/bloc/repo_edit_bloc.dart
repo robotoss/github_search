@@ -2,18 +2,115 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:github_search/data/database/database_repo_search_dao.dart';
+import 'package:github_search/data/repository/repository.dart';
 
 part 'repo_edit_event.dart';
 part 'repo_edit_state.dart';
 
 class RepoEditBloc extends Bloc<RepoEditEvent, RepoEditState> {
   @override
-  RepoEditState get initialState => RepoEditInitial();
+  RepoEditState get initialState => RepoEditLoadingState(isLoading: null);
+
+  static final RegExp nameRegExp = RegExp('[a-zA-Z]');
+
+  TextEditingController nameTextController = TextEditingController();
+  TextEditingController descriptionTextController = TextEditingController();
+
+  String repoType = 'Public';
+  String gitIgnore = '';
+  String license = '';
+
+  bool initReadMe = false;
+
+  User user;
+
+  Repository _repository = Repository();
 
   @override
   Stream<RepoEditState> mapEventToState(
     RepoEditEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is InitialMainDataEvent) {
+      yield* _buildInitialMainDataEvent(event.context);
+    }
+    if (event is ChangeRepoTypeEvent) {
+      yield* _buildChangeRepoTypeEvent(event.type);
+    }
+    if (event is CheckBoxPressedEvent) {
+      yield* _buildCheckBoxPressedEvent();
+    }
+    if (event is CreateRepositoryPressedEvent) {
+      yield* _buildCreateRepositoryPressedEvent();
+    }
   }
+
+  Stream<RepoEditState> _buildInitialMainDataEvent(
+      BuildContext context) async* {
+    user = await _repository.getUser(context);
+
+    yield RepoEditInitialState(
+        nameTextController: nameTextController,
+        descriptionTextController: descriptionTextController,
+        repoType: repoType,
+        gitIgnore: gitIgnore,
+        license: license,
+        initReadMe: initReadMe,
+        user: user);
+  }
+
+  Stream<RepoEditState> _buildChangeRepoTypeEvent(String type) async* {
+    repoType = type;
+
+    yield RepoEditInitialState(
+        nameTextController: nameTextController,
+        descriptionTextController: descriptionTextController,
+        repoType: repoType,
+        gitIgnore: gitIgnore,
+        license: license,
+        initReadMe: initReadMe,
+        user: user);
+  }
+
+  Stream<RepoEditState> _buildCheckBoxPressedEvent() async* {
+    initReadMe = !initReadMe;
+
+    yield RepoEditInitialState(
+        nameTextController: nameTextController,
+        descriptionTextController: descriptionTextController,
+        repoType: repoType,
+        gitIgnore: gitIgnore,
+        license: license,
+        initReadMe: initReadMe,
+        user: user);
+  }
+
+  Stream<RepoEditState> _buildCreateRepositoryPressedEvent() async* {
+    if (nameTextController.text.isEmpty) {
+      yield RepoEditFailureState(error: 'Repository name is empty');
+    } else if (nameTextController.text.length < 3) {
+      yield RepoEditFailureState(error: 'Min characters for Repository name is 3');
+    } else if (!nameRegExp.hasMatch(nameTextController.text)) {
+      yield RepoEditFailureState(error: 'Please use the Latin Alphabet');
+    } else if (descriptionTextController.text.isEmpty) {
+      yield RepoEditFailureState(error: 'Description field is empty');
+    } else if (descriptionTextController.text.length < 10) {
+      yield RepoEditFailureState(error: 'Min characters for description is 10');
+    } else if (!nameRegExp.hasMatch(descriptionTextController.text)) {
+      yield RepoEditFailureState(error: 'Please use the Latin Alphabet');
+    } else {
+
+    }
+
+    yield RepoEditInitialState(
+        nameTextController: nameTextController,
+        descriptionTextController: descriptionTextController,
+        repoType: repoType,
+        gitIgnore: gitIgnore,
+        license: license,
+        initReadMe: initReadMe,
+        user: user);
+  }
+
 }

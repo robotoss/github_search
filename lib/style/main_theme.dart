@@ -17,6 +17,8 @@ ThemeData _buildDefaultTheme() {
 
 class ColorPalette {
   static var colorRed = Color(0xFFFF2800);
+  static var mainTextField = Color(0xFFFAFBFC);
+  static var mainTextFieldBorder = Color(0xFFD1D5DA);
 }
 
 class FormatsTheme {
