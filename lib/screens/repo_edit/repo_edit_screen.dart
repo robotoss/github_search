@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:github_search/widgets/buttons/main_button.dart';
+import 'package:github_search/widgets/dialogs/notification_dialog.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
 import 'package:github_search/widgets/textFields/main_text_field.dart';
 
@@ -32,6 +33,9 @@ class RepoEditScreen extends StatelessWidget {
             state.isLoading
                 ? showLoadingLayer(context)
                 : Navigator.pop(context);
+          }
+          if (state is RepoEditDialogState) {
+            showCustomAlertDialog(context, state.message);
           }
         },
         child: Scaffold(
@@ -135,15 +139,16 @@ class RepoEditScreen extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          repoTypeItem(context, 'Public', state.repoType),
-          repoTypeItem(context, 'Private', state.repoType),
+          repoTypeItem(context, 'Public', state.isPrivate),
+          repoTypeItem(context, 'Private', state.isPrivate),
           Divider()
         ],
       ),
     );
   }
 
-  Widget repoTypeItem(BuildContext context, String type, String activeRepo) {
+  Widget repoTypeItem(BuildContext context, String type, bool isPrivate) {
+    var _activeType = isPrivate ? 'Private' : 'Public';
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: GestureDetector(
@@ -158,7 +163,7 @@ class RepoEditScreen extends StatelessWidget {
                   Container(
                     width: 15,
                     height: 15,
-                    decoration: activeRepo == type
+                    decoration: _activeType == type
                         ? BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(width: 5, color: Colors.blue))

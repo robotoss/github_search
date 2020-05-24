@@ -10,7 +10,7 @@ abstract class RepoEditState extends Equatable {
 class RepoEditInitialState extends RepoEditState {
   final TextEditingController nameTextController;
   final TextEditingController descriptionTextController;
-  final String repoType;
+  final bool isPrivate;
   final String gitIgnore;
   final String license;
   final bool initReadMe;
@@ -19,7 +19,7 @@ class RepoEditInitialState extends RepoEditState {
   RepoEditInitialState({
     @required this.nameTextController,
     @required this.descriptionTextController,
-    @required this.repoType,
+    @required this.isPrivate,
     @required this.gitIgnore,
     @required this.license,
     @required this.initReadMe,
@@ -30,7 +30,7 @@ class RepoEditInitialState extends RepoEditState {
   List<Object> get props => [
         nameTextController,
         descriptionTextController,
-        repoType,
+        isPrivate,
         gitIgnore,
         license,
         initReadMe
@@ -59,4 +59,16 @@ class RepoEditFailureState extends RepoEditState {
 
   @override
   String toString() => 'RepoEditFailureState { error: $error }';
+}
+
+class RepoEditDialogState extends RepoEditState {
+  final String message;
+
+  const RepoEditDialogState({@required this.message});
+
+  @override
+  List<Object> get props => [message];
+
+  @override
+  String toString() => 'RepoEditDialogState { message: $message }';
 }
