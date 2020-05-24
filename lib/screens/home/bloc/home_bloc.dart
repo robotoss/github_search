@@ -27,7 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   List<ReposItem> reposList = List();
 
-  List<RepoItem> userReposList = List();
+  List<ReposItem> userReposList = List();
 
   @override
   Stream<HomeState> mapEventToState(
@@ -47,7 +47,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         textController: searchEditingController,
         reposList: reposList,
         userReposList: userReposList);
-    userReposList = await repository.getRepo(context);
+    try {
+      userReposList = await repository.getRepo(context);
+      print(userReposList);
+    } catch (error){
+      userReposList = List();
+    }
     yield HomeLoadingState(isLoading: false);
     yield HomeInitialState(
         textController: searchEditingController,

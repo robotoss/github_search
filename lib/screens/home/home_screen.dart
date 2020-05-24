@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/screens/repo_edit/repo_edit_screen.dart';
 import 'package:github_search/screens/repo_info/repo_info_screen.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
@@ -129,7 +130,7 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-  Widget repoListItem(BuildContext context, dynamic repoData) {
+  Widget repoListItem(BuildContext context, ReposItem repoData) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: InkWell(
@@ -142,11 +143,11 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              repoData.name?? '',
+              repoData.name ?? '',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 10),
-            Text(repoData.description?? ''),
+            Text(repoData.description ?? ''),
             Divider()
           ],
         ),

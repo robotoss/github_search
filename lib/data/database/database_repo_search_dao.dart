@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:github_search/data/models/search_repos.dart';
 import 'package:moor_ffi/moor_ffi.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:path_provider/path_provider.dart';

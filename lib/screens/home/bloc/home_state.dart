@@ -10,7 +10,7 @@ abstract class HomeState extends Equatable {
 class HomeInitialState extends HomeState {
   final TextEditingController textController;
   final List<ReposItem> reposList;
-  final List<RepoItem> userReposList;
+  final List<ReposItem> userReposList;
 
   HomeInitialState(
       {@required this.textController,

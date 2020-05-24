@@ -35,7 +35,7 @@ class Repository {
   ///
   
   /// Get all own repositories
-  Future<List<RepoItem>> getRepo(BuildContext context) async {
+  Future<List<ReposItem>> getRepo(BuildContext context) async {
     final _sql = Provider.of<RepoSearchBaseDao>(context, listen: false);
     return _sql.getRepos();
   }
