@@ -10,11 +10,15 @@ abstract class HomeState extends Equatable {
 class HomeInitialState extends HomeState {
   final TextEditingController textController;
   final List<ReposItem> reposList;
+  final List<RepoItem> userReposList;
 
-  HomeInitialState({@required this.textController, @required this.reposList});
+  HomeInitialState(
+      {@required this.textController,
+      @required this.reposList,
+      @required this.userReposList});
 
   @override
-  List<Object> get props => [textController, reposList];
+  List<Object> get props => [textController, reposList, userReposList];
 }
 
 class HomeLoadingState extends HomeState {

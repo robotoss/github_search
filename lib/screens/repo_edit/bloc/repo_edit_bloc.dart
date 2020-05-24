@@ -116,35 +116,39 @@ class RepoEditBloc extends Bloc<RepoEditEvent, RepoEditState> {
           initReadMe: initReadMe,
           user: user);
 
-      _repository.addNewRepo(
-          context,
-          RepoItem(
-              id: null,
-              userId: 0,
-              nodeId: "MDEwOlJlcG9zaXRvcnkzMDgxMjg2",
-              name: nameTextController.text,
-              fullName: "${user.login}/${nameTextController.text}",
-              private: isPrivate,
-              htmlUrl: '',
-              description: descriptionTextController.toString(),
-              fork: false,
-              url: '',
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-              pushedAt: DateTime.now(),
-              homepage: '',
-              size: 524,
-              stargazersCount: 1,
-              watchersCount: 1,
-              language: '',
-              forksCount: 0,
-              openIssuesCount: 0,
-              masterBranch: "master",
-              defaultBranch: "master",
-              score: 1.0));
-      yield RepoEditLoadingState(isLoading: false);
-      yield RepoEditDialogState(message: 'Repository is created');
-      
+      try {
+        _repository.addNewRepo(
+            context,
+            RepoItem(
+                id: null,
+                userId: 0,
+                nodeId: "MDEwOlJlcG9zaXRvcnkzMDgxMjg2",
+                name: nameTextController.text,
+                fullName: "${user.login}/${nameTextController.text}",
+                private: isPrivate,
+                htmlUrl: '',
+                description: descriptionTextController.text,
+                fork: false,
+                url: '',
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+                pushedAt: DateTime.now(),
+                homepage: '',
+                size: 524,
+                stargazersCount: 1,
+                watchersCount: 1,
+                language: '',
+                forksCount: 0,
+                openIssuesCount: 0,
+                masterBranch: "master",
+                defaultBranch: "master",
+                score: 1.0));
+        yield RepoEditLoadingState(isLoading: false);
+        yield RepoEditDialogState(message: 'Repository is created');
+      } catch (error) {
+        yield RepoEditLoadingState(isLoading: false);
+        yield RepoEditFailureState(error: error.toString());
+      }
     }
 
     yield RepoEditInitialState(

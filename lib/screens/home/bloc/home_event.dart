@@ -7,4 +7,9 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitialMainDataEvent extends HomeEvent{
+  final BuildContext context;
+  InitialMainDataEvent({@required this.context});
+}
+
 class SearchButtonPressedEvent extends HomeEvent{}

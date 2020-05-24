@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/screens/repo_edit/repo_edit_screen.dart';
 import 'package:github_search/screens/repo_info/repo_info_screen.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
@@ -16,7 +15,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (context) {
-        return HomeBloc();
+        return HomeBloc()..add(InitialMainDataEvent(context: context));
       },
       child: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
@@ -95,17 +94,30 @@ class HomeScreen extends StatelessWidget {
 
   Widget body(BuildContext context, HomeState state) {
     if (state is HomeInitialState) {
-      return ListView.builder(
-          itemCount: state.reposList.length,
-          itemBuilder: (context, index) {
-            return repoListItem(context, state.reposList[index]);
-          });
+      return SingleChildScrollView(
+        child: Column(children: <Widget>[
+          ListView.builder(
+              itemCount: state.userReposList.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return repoListItem(context, state.userReposList[index]);
+              }),
+          ListView.builder(
+              itemCount: state.reposList.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return repoListItem(context, state.reposList[index]);
+              }),
+        ]),
+      );
     } else {
       return Text('BLoC state error');
     }
   }
 
-  Widget repoListItem(BuildContext context, ReposItem repoData) {
+  Widget repoListItem(BuildContext context, dynamic repoData) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: InkWell(
@@ -133,8 +145,7 @@ class HomeScreen extends StatelessWidget {
   Widget fab(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                RepoEditScreen())),
+          builder: (BuildContext context) => RepoEditScreen())),
       child: Icon(Icons.add),
     );
   }

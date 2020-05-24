@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:github_search/data/database/database_repo_search_dao.dart';
 import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/data/repository/repository.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +15,9 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
   HomeState get initialState => HomeInitialState(
-      textController: searchEditingController, reposList: reposList);
+      textController: searchEditingController,
+      reposList: reposList,
+      userReposList: userReposList);
 
   TextEditingController searchEditingController = TextEditingController();
 
@@ -24,13 +27,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   List<ReposItem> reposList = List();
 
+  List<RepoItem> userReposList = List();
+
   @override
   Stream<HomeState> mapEventToState(
     HomeEvent event,
   ) async* {
+    if (event is InitialMainDataEvent) {
+      yield* _buildInitialMainDataEvent(event.context);
+    }
     if (event is SearchButtonPressedEvent) {
       yield* _buildSearchButtonPressedEvent();
     }
+  }
+
+  Stream<HomeState> _buildInitialMainDataEvent(BuildContext context) async* {
+    yield HomeLoadingState(isLoading: true);
+    yield HomeInitialState(
+        textController: searchEditingController,
+        reposList: reposList,
+        userReposList: userReposList);
+    userReposList = await repository.getRepo(context);
+    yield HomeLoadingState(isLoading: false);
+    yield HomeInitialState(
+        textController: searchEditingController,
+        reposList: reposList,
+        userReposList: userReposList);
   }
 
   Stream<HomeState> _buildSearchButtonPressedEvent() async* {
@@ -43,7 +65,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } else {
       yield HomeLoadingState(isLoading: true);
       yield HomeInitialState(
-          textController: searchEditingController, reposList: reposList);
+          textController: searchEditingController,
+          reposList: reposList,
+          userReposList: userReposList);
 
       try {
         var serverData =
@@ -60,6 +84,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     }
     yield HomeInitialState(
-        textController: searchEditingController, reposList: reposList);
+        textController: searchEditingController,
+        reposList: reposList,
+        userReposList: userReposList);
   }
 }
