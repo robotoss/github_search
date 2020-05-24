@@ -48,6 +48,9 @@ class RepoEditBloc extends Bloc<RepoEditEvent, RepoEditState> {
     if (event is CreateRepositoryPressedEvent) {
       yield* _buildCreateRepositoryPressedEvent(event.context);
     }
+    if (event is SaveChangePressedEvent) {
+      yield* _buildSaveChangePressedEvent(event.context);
+    }
   }
 
   Stream<RepoEditState> _buildInitialMainDataEvent(
@@ -155,6 +158,77 @@ class RepoEditBloc extends Bloc<RepoEditEvent, RepoEditState> {
                 score: 1.0));
         yield RepoEditLoadingState(isLoading: false);
         yield RepoEditDialogState(message: 'Repository is created');
+      } catch (error) {
+        yield RepoEditLoadingState(isLoading: false);
+        yield RepoEditFailureState(error: error.toString());
+      }
+    }
+
+    yield RepoEditInitialState(
+        nameTextController: nameTextController,
+        descriptionTextController: descriptionTextController,
+        isPrivate: isPrivate,
+        gitIgnore: gitIgnore,
+        license: license,
+        initReadMe: initReadMe,
+        user: user);
+  }
+
+  Stream<RepoEditState> _buildSaveChangePressedEvent(
+      BuildContext context) async* {
+    if (nameTextController.text.isEmpty) {
+      yield RepoEditFailureState(error: 'Repository name is empty');
+    } else if (nameTextController.text.length < 3) {
+      yield RepoEditFailureState(
+          error: 'Min characters for Repository name is 3');
+    } else if (!nameRegExp.hasMatch(nameTextController.text)) {
+      yield RepoEditFailureState(error: 'Please use the Latin Alphabet');
+    } else if (descriptionTextController.text.isEmpty) {
+      yield RepoEditFailureState(error: 'Description field is empty');
+    } else if (descriptionTextController.text.length < 10) {
+      yield RepoEditFailureState(error: 'Min characters for description is 10');
+    } else if (!nameRegExp.hasMatch(descriptionTextController.text)) {
+      yield RepoEditFailureState(error: 'Please use the Latin Alphabet');
+    } else {
+      yield RepoEditLoadingState(isLoading: true);
+      yield RepoEditInitialState(
+          nameTextController: nameTextController,
+          descriptionTextController: descriptionTextController,
+          isPrivate: isPrivate,
+          gitIgnore: gitIgnore,
+          license: license,
+          initReadMe: initReadMe,
+          user: user);
+
+      try {
+        _repository.updateRepo(
+            context,
+            RepoItem(
+                id: repoData.id,
+                userId: 0,
+                nodeId: repoData.nodeId,
+                name: nameTextController.text,
+                fullName: "${user.login}/${nameTextController.text}",
+                private: isPrivate,
+                htmlUrl: repoData.htmlUrl,
+                description: descriptionTextController.text,
+                fork: repoData.fork,
+                url: repoData.url,
+                createdAt: repoData.createdAt,
+                updatedAt: DateTime.now(),
+                pushedAt: DateTime.now(),
+                homepage: repoData.homepage,
+                size: repoData.size,
+                stargazersCount: repoData.stargazersCount,
+                watchersCount: repoData.watchersCount,
+                language: repoData.language,
+                forksCount: repoData.forksCount,
+                openIssuesCount: repoData.openIssuesCount,
+                masterBranch: repoData.masterBranch,
+                defaultBranch: repoData.defaultBranch,
+                score: repoData.score));
+        yield RepoEditLoadingState(isLoading: false);
+        yield RepoEditDialogState(message: 'Repository is updated');
       } catch (error) {
         yield RepoEditLoadingState(isLoading: false);
         yield RepoEditFailureState(error: error.toString());

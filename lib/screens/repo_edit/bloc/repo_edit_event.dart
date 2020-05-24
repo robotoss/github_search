@@ -24,3 +24,8 @@ class CreateRepositoryPressedEvent extends RepoEditEvent {
   CreateRepositoryPressedEvent({@required this.context});
 }
 
+class SaveChangePressedEvent extends RepoEditEvent {
+  final BuildContext context;
+  SaveChangePressedEvent({@required this.context});
+}
+

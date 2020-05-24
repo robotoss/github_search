@@ -85,7 +85,7 @@ class RepoEditScreen extends StatelessWidget {
                 repoData == null ? initReadMe(context, state) : Container(),
                 MainButtonWidget(
                     func: () => BlocProvider.of<RepoEditBloc>(context)
-                        .add(CreateRepositoryPressedEvent(context: context)),
+                        .add(repoData == null ? CreateRepositoryPressedEvent(context: context) : SaveChangePressedEvent(context: context)),
                     buttonTitle: repoData == null ? 'Create repository' : 'Save repository change'),
               ],
             ),
