@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:github_search/data/database/database_repo_search_dao.dart';
 import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/data/repository/repository.dart';
 import 'package:meta/meta.dart';
