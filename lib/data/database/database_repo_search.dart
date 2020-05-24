@@ -19,7 +19,6 @@ class Users extends Table {
 class RepoItems extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get userId => integer()();
-  TextColumn get programName => text()();
   TextColumn get nodeId => text()();
   TextColumn get name => text()();
   TextColumn get fullName => text()();

@@ -480,7 +480,6 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
 class RepoItem extends DataClass implements Insertable<RepoItem> {
   final int id;
   final int userId;
-  final String programName;
   final String nodeId;
   final String name;
   final String fullName;
@@ -505,7 +504,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
   RepoItem(
       {@required this.id,
       @required this.userId,
-      @required this.programName,
       @required this.nodeId,
       @required this.name,
       @required this.fullName,
@@ -539,8 +537,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       userId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
-      programName: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}program_name']),
       nodeId:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}node_id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
@@ -589,9 +585,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     }
     if (!nullToAbsent || userId != null) {
       map['user_id'] = Variable<int>(userId);
-    }
-    if (!nullToAbsent || programName != null) {
-      map['program_name'] = Variable<String>(programName);
     }
     if (!nullToAbsent || nodeId != null) {
       map['node_id'] = Variable<String>(nodeId);
@@ -664,9 +657,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       userId:
           userId == null && nullToAbsent ? const Value.absent() : Value(userId),
-      programName: programName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(programName),
       nodeId:
           nodeId == null && nullToAbsent ? const Value.absent() : Value(nodeId),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
@@ -729,7 +719,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     return RepoItem(
       id: serializer.fromJson<int>(json['id']),
       userId: serializer.fromJson<int>(json['userId']),
-      programName: serializer.fromJson<String>(json['programName']),
       nodeId: serializer.fromJson<String>(json['nodeId']),
       name: serializer.fromJson<String>(json['name']),
       fullName: serializer.fromJson<String>(json['fullName']),
@@ -759,7 +748,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'userId': serializer.toJson<int>(userId),
-      'programName': serializer.toJson<String>(programName),
       'nodeId': serializer.toJson<String>(nodeId),
       'name': serializer.toJson<String>(name),
       'fullName': serializer.toJson<String>(fullName),
@@ -787,7 +775,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
   RepoItem copyWith(
           {int id,
           int userId,
-          String programName,
           String nodeId,
           String name,
           String fullName,
@@ -812,7 +799,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
       RepoItem(
         id: id ?? this.id,
         userId: userId ?? this.userId,
-        programName: programName ?? this.programName,
         nodeId: nodeId ?? this.nodeId,
         name: name ?? this.name,
         fullName: fullName ?? this.fullName,
@@ -840,7 +826,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
     return (StringBuffer('RepoItem(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
-          ..write('programName: $programName, ')
           ..write('nodeId: $nodeId, ')
           ..write('name: $name, ')
           ..write('fullName: $fullName, ')
@@ -872,49 +857,49 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
       $mrjc(
           userId.hashCode,
           $mrjc(
-              programName.hashCode,
+              nodeId.hashCode,
               $mrjc(
-                  nodeId.hashCode,
+                  name.hashCode,
                   $mrjc(
-                      name.hashCode,
+                      fullName.hashCode,
                       $mrjc(
-                          fullName.hashCode,
+                          private.hashCode,
                           $mrjc(
-                              private.hashCode,
+                              htmlUrl.hashCode,
                               $mrjc(
-                                  htmlUrl.hashCode,
+                                  description.hashCode,
                                   $mrjc(
-                                      description.hashCode,
+                                      fork.hashCode,
                                       $mrjc(
-                                          fork.hashCode,
+                                          url.hashCode,
                                           $mrjc(
-                                              url.hashCode,
+                                              createdAt.hashCode,
                                               $mrjc(
-                                                  createdAt.hashCode,
+                                                  updatedAt.hashCode,
                                                   $mrjc(
-                                                      updatedAt.hashCode,
+                                                      pushedAt.hashCode,
                                                       $mrjc(
-                                                          pushedAt.hashCode,
+                                                          homepage.hashCode,
                                                           $mrjc(
-                                                              homepage.hashCode,
+                                                              size.hashCode,
                                                               $mrjc(
-                                                                  size.hashCode,
+                                                                  stargazersCount
+                                                                      .hashCode,
                                                                   $mrjc(
-                                                                      stargazersCount
+                                                                      watchersCount
                                                                           .hashCode,
                                                                       $mrjc(
-                                                                          watchersCount
+                                                                          language
                                                                               .hashCode,
                                                                           $mrjc(
-                                                                              language.hashCode,
-                                                                              $mrjc(forksCount.hashCode, $mrjc(openIssuesCount.hashCode, $mrjc(masterBranch.hashCode, $mrjc(defaultBranch.hashCode, score.hashCode))))))))))))))))))))))));
+                                                                              forksCount.hashCode,
+                                                                              $mrjc(openIssuesCount.hashCode, $mrjc(masterBranch.hashCode, $mrjc(defaultBranch.hashCode, score.hashCode)))))))))))))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is RepoItem &&
           other.id == this.id &&
           other.userId == this.userId &&
-          other.programName == this.programName &&
           other.nodeId == this.nodeId &&
           other.name == this.name &&
           other.fullName == this.fullName &&
@@ -941,7 +926,6 @@ class RepoItem extends DataClass implements Insertable<RepoItem> {
 class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   final Value<int> id;
   final Value<int> userId;
-  final Value<String> programName;
   final Value<String> nodeId;
   final Value<String> name;
   final Value<String> fullName;
@@ -966,7 +950,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   const RepoItemsCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
-    this.programName = const Value.absent(),
     this.nodeId = const Value.absent(),
     this.name = const Value.absent(),
     this.fullName = const Value.absent(),
@@ -992,7 +975,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   RepoItemsCompanion.insert({
     this.id = const Value.absent(),
     @required int userId,
-    @required String programName,
     @required String nodeId,
     @required String name,
     @required String fullName,
@@ -1015,7 +997,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
     @required String defaultBranch,
     @required double score,
   })  : userId = Value(userId),
-        programName = Value(programName),
         nodeId = Value(nodeId),
         name = Value(name),
         fullName = Value(fullName),
@@ -1040,7 +1021,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   static Insertable<RepoItem> custom({
     Expression<int> id,
     Expression<int> userId,
-    Expression<String> programName,
     Expression<String> nodeId,
     Expression<String> name,
     Expression<String> fullName,
@@ -1066,7 +1046,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (userId != null) 'user_id': userId,
-      if (programName != null) 'program_name': programName,
       if (nodeId != null) 'node_id': nodeId,
       if (name != null) 'name': name,
       if (fullName != null) 'full_name': fullName,
@@ -1094,7 +1073,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
   RepoItemsCompanion copyWith(
       {Value<int> id,
       Value<int> userId,
-      Value<String> programName,
       Value<String> nodeId,
       Value<String> name,
       Value<String> fullName,
@@ -1119,7 +1097,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
     return RepoItemsCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
-      programName: programName ?? this.programName,
       nodeId: nodeId ?? this.nodeId,
       name: name ?? this.name,
       fullName: fullName ?? this.fullName,
@@ -1152,9 +1129,6 @@ class RepoItemsCompanion extends UpdateCompanion<RepoItem> {
     }
     if (userId.present) {
       map['user_id'] = Variable<int>(userId.value);
-    }
-    if (programName.present) {
-      map['program_name'] = Variable<String>(programName.value);
     }
     if (nodeId.present) {
       map['node_id'] = Variable<String>(nodeId.value);
@@ -1244,20 +1218,6 @@ class $RepoItemsTable extends RepoItems
   GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn(
       'user_id',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _programNameMeta =
-      const VerificationMeta('programName');
-  GeneratedTextColumn _programName;
-  @override
-  GeneratedTextColumn get programName =>
-      _programName ??= _constructProgramName();
-  GeneratedTextColumn _constructProgramName() {
-    return GeneratedTextColumn(
-      'program_name',
       $tableName,
       false,
     );
@@ -1531,7 +1491,6 @@ class $RepoItemsTable extends RepoItems
   List<GeneratedColumn> get $columns => [
         id,
         userId,
-        programName,
         nodeId,
         name,
         fullName,
@@ -1573,14 +1532,6 @@ class $RepoItemsTable extends RepoItems
           userId.isAcceptableOrUnknown(data['user_id'], _userIdMeta));
     } else if (isInserting) {
       context.missing(_userIdMeta);
-    }
-    if (data.containsKey('program_name')) {
-      context.handle(
-          _programNameMeta,
-          programName.isAcceptableOrUnknown(
-              data['program_name'], _programNameMeta));
-    } else if (isInserting) {
-      context.missing(_programNameMeta);
     }
     if (data.containsKey('node_id')) {
       context.handle(_nodeIdMeta,
