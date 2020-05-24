@@ -12,6 +12,10 @@ class Repository {
     return _api.reposByName(keyword);
   }
 
+  ///
+  /// User
+  ///
+
   /// Get user
   Future<User> getUser(
     BuildContext context,
@@ -24,5 +28,33 @@ class Repository {
   Future<void> createUser(BuildContext context, User user) async {
     final _sql = Provider.of<RepoSearchBaseDao>(context, listen: false);
     return _sql.insertUser(user);
+  }
+
+  ///
+  /// Repos
+  ///
+  
+  /// Get all own repositories
+  Future<List<RepoItem>> getRepo(BuildContext context) async {
+    final _sql = Provider.of<RepoSearchBaseDao>(context, listen: false);
+    return _sql.getRepos();
+  }
+
+  /// Create new repository
+  Future<void> addNewRepo(BuildContext context, RepoItem repo) async {
+    final _sql = Provider.of<RepoSearchBaseDao>(context, listen: false);
+    return _sql.insertRepo(repo);
+  }
+
+  /// Update repository
+  Future<void> updateRepo(BuildContext context, RepoItem repo) async {
+    final _sql = Provider.of<RepoSearchBaseDao>(context, listen: false);
+    return _sql.updateRepo(repo);
+  }
+
+  /// Delete repository
+  Future<void> deleteRepo(BuildContext context, RepoItem repo) async {
+    final _sql = Provider.of<RepoSearchBaseDao>(context, listen: false);
+    return _sql.deleteRepo(repo);
   }
 }
