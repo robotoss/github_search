@@ -136,9 +136,13 @@ class HomeScreen extends StatelessWidget {
       child: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                RepoInfoScreen(repoData: repoData))),
+        onTap: () async {
+          await Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  RepoInfoScreen(repoData: repoData, func: () {})));
+          BlocProvider.of<HomeBloc>(context)
+              .add(InitialMainDataEvent(context: context));
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -162,7 +166,8 @@ class HomeScreen extends StatelessWidget {
             builder: (BuildContext context) => RepoEditScreen(
                   repoData: null,
                 )));
-                BlocProvider.of<HomeBloc>(context).add(InitialMainDataEvent(context: context));
+        BlocProvider.of<HomeBloc>(context)
+            .add(InitialMainDataEvent(context: context));
       },
       child: Icon(Icons.add),
     );

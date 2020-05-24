@@ -9,7 +9,9 @@ import 'bloc/repo_info_bloc.dart';
 
 class RepoInfoScreen extends StatelessWidget {
   final ReposItem repoData;
-  const RepoInfoScreen({Key key, @required this.repoData}) : super(key: key);
+  final Function func;
+  const RepoInfoScreen({Key key, @required this.repoData, @required this.func})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +29,16 @@ class RepoInfoScreen extends StatelessWidget {
               appBar: AppBar(
                 title: Text(repoData.name),
                 actions: <Widget>[
-                  repoData.owner.id ==0 ? IconButton(
-                    icon: Icon(Icons.edit), 
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => RepoEditScreen(repoData: repoData))),) : Container()
+                  repoData.owner.id == 0
+                      ? IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () async {
+                            await Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    RepoEditScreen(repoData: repoData)));
+                            Navigator.pop(context);
+                          })
+                      : Container()
                 ],
               ),
               body: body(context),
@@ -78,11 +86,14 @@ class RepoInfoScreen extends StatelessWidget {
             Container(
               height: 70,
               width: 70,
-              child: repoData.owner.id == 0 ? Image.asset(repoData.owner.avatarUrl): CachedNetworkImage(
-                imageUrl: "${repoData.owner.avatarUrl}",
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
+              child: repoData.owner.id == 0
+                  ? Image.asset(repoData.owner.avatarUrl)
+                  : CachedNetworkImage(
+                      imageUrl: "${repoData.owner.avatarUrl}",
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
             ),
           ],
         ),
