@@ -36,6 +36,7 @@ dependencies:
   moor_flutter: ^3.0.0
   moor_ffi: ^0.6.0
   provider: ^4.1.2
+  flutter_svg: ^0.17.4
 
 
 dev_dependencies:
@@ -58,6 +59,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/icons_svg/
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
