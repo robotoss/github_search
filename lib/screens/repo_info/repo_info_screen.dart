@@ -30,7 +30,7 @@ class RepoInfoScreen extends StatelessWidget {
                   repoData.owner.id ==0 ? IconButton(
                     icon: Icon(Icons.edit), 
                     onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => RepoEditScreen(repoData: repoData,))),) : Container()
+          builder: (BuildContext context) => RepoEditScreen(repoData: repoData))),) : Container()
                 ],
               ),
               body: body(context),

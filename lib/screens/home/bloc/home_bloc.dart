@@ -48,8 +48,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         reposList: reposList,
         userReposList: userReposList);
     try {
+      userReposList.clear();
       userReposList = await repository.getRepo(context);
-      print(userReposList);
     } catch (error){
       userReposList = List();
     }

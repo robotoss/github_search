@@ -157,8 +157,13 @@ class HomeScreen extends StatelessWidget {
 
   Widget fab(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => RepoEditScreen(repoData: null,))),
+      onPressed: () async {
+        await Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => RepoEditScreen(
+                  repoData: null,
+                )));
+                BlocProvider.of<HomeBloc>(context).add(InitialMainDataEvent(context: context));
+      },
       child: Icon(Icons.add),
     );
   }
