@@ -4,12 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:github_search/data/database/database_repo_search_dao.dart';
+import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/data/repository/repository.dart';
 
 part 'repo_edit_event.dart';
 part 'repo_edit_state.dart';
 
 class RepoEditBloc extends Bloc<RepoEditEvent, RepoEditState> {
+  final ReposItem repoData;
+  RepoEditBloc({@required this.repoData});
+
   @override
   RepoEditState get initialState => RepoEditLoadingState(isLoading: null);
 
@@ -49,6 +53,12 @@ class RepoEditBloc extends Bloc<RepoEditEvent, RepoEditState> {
   Stream<RepoEditState> _buildInitialMainDataEvent(
       BuildContext context) async* {
     user = await _repository.getUser(context);
+
+    if(repoData != null) {
+      nameTextController.text = repoData.name;
+      descriptionTextController.text = repoData.description;
+      isPrivate = repoData.private;
+    }
 
     yield RepoEditInitialState(
         nameTextController: nameTextController,

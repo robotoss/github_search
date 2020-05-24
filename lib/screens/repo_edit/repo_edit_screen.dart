@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:github_search/data/models/search_repos.dart';
 import 'package:github_search/widgets/buttons/main_button.dart';
 import 'package:github_search/widgets/dialogs/notification_dialog.dart';
 import 'package:github_search/widgets/layers/load_layer.dart';
@@ -9,7 +10,8 @@ import 'package:github_search/widgets/textFields/main_text_field.dart';
 import 'bloc/repo_edit_bloc.dart';
 
 class RepoEditScreen extends StatelessWidget {
-  const RepoEditScreen({Key key}) : super(key: key);
+  final ReposItem repoData;
+  const RepoEditScreen({Key key, @required this.repoData}) : super(key: key);
 
   static GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -17,7 +19,7 @@ class RepoEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<RepoEditBloc>(
       create: (context) {
-        return RepoEditBloc()..add(InitialMainDataEvent(context: context));
+        return RepoEditBloc(repoData: repoData)..add(InitialMainDataEvent(context: context));
       },
       child: BlocListener<RepoEditBloc, RepoEditState>(
         listener: (context, state) {
@@ -80,11 +82,11 @@ class RepoEditScreen extends StatelessWidget {
                 ),
                 Divider(),
                 repoType(context, state),
-                initReadMe(context, state),
+                repoData == null ? initReadMe(context, state) : Container(),
                 MainButtonWidget(
                     func: () => BlocProvider.of<RepoEditBloc>(context)
                         .add(CreateRepositoryPressedEvent(context: context)),
-                    buttonTitle: 'Create repository'),
+                    buttonTitle: repoData == null ? 'Create repository' : 'Save repository change'),
               ],
             ),
           ),

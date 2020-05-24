@@ -9,15 +9,18 @@ class MainButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      child: FlatButton(
-        shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
-        color: Colors.blue,
-        onPressed: func, 
-        child: Text(buttonTitle, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),)
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        child: FlatButton(
+          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
+          color: Colors.blue,
+          onPressed: func, 
+          child: Text(buttonTitle, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),)
+          ),
+      ),
     );
   }
 }

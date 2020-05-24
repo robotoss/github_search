@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_search/data/models/search_repos.dart';
+import 'package:github_search/screens/repo_edit/repo_edit_screen.dart';
 import 'package:github_search/style/main_theme.dart';
 
 import 'bloc/repo_info_bloc.dart';
@@ -28,7 +29,8 @@ class RepoInfoScreen extends StatelessWidget {
                 actions: <Widget>[
                   repoData.owner.id ==0 ? IconButton(
                     icon: Icon(Icons.edit), 
-                    onPressed: () {}) : Container()
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => RepoEditScreen(repoData: repoData,))),) : Container()
                 ],
               ),
               body: body(context),
