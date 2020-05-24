@@ -25,6 +25,11 @@ class RepoInfoScreen extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(
                 title: Text(repoData.name),
+                actions: <Widget>[
+                  repoData.owner.id ==0 ? IconButton(
+                    icon: Icon(Icons.edit), 
+                    onPressed: () {}) : Container()
+                ],
               ),
               body: body(context),
             ),
@@ -71,7 +76,7 @@ class RepoInfoScreen extends StatelessWidget {
             Container(
               height: 70,
               width: 70,
-              child: CachedNetworkImage(
+              child: repoData.owner.id == 0 ? Image.asset(repoData.owner.avatarUrl): CachedNetworkImage(
                 imageUrl: "${repoData.owner.avatarUrl}",
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
