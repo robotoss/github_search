@@ -132,6 +132,12 @@ class RepoInfoScreen extends StatelessWidget {
           FormatsTheme.dateFormatter.format(repoData.createdAt) ?? "Unknown",
         ),
         SizedBox(height: 10),
+        Text('Update at:',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+        Text(
+          FormatsTheme.dateFormatter.format(repoData.updatedAt) ?? "Unknown",
+        ),
+        SizedBox(height: 10),
         Text('Language:',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
         Text(repoData.language ?? "Unknown"),
